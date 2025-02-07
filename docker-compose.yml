@@ -1,0 +1,13 @@
+# https://hub.docker.com/_/postgres
+services:
+  db:
+    image: postgres:17.2-bookworm
+    command: ["-c", "config_file=/etc/postgresql/docker.conf"]
+    environment:
+      PGDATA: /var/lib/postgresql/data/pgdata
+      POSTGRES_PASSWORD: ${X_POSTGRES_PASSWORD:-NOT_SAFE}
+    restart: unless-stopped
+    shm_size: 128mb
+    volumes:
+      - ./data:/var/lib/postgresql/data
+      - ./config/docker.conf:/etc/postgresql/docker.conf
